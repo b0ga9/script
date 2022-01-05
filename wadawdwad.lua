@@ -1,4 +1,4 @@
-script_version(1.0)
+script_version(2.0)
 
 require "lib.moonloader"
 local inicfg = require 'inicfg'
@@ -92,7 +92,7 @@ function autoupdate(json_url, prefix, url)
 end
 
 function cmd_updat(arg)
-   sampShowDialog(1000,'Автообновление','Текущая версия скрипта: v1.0'.."\nNew Обновление",'Закрыть',"", 0)-- body
+   sampShowDialog(1000,'Автообновление','Текущая версия скрипта: v1.0'.."\nNew Обновление" .. "\nFFFFFF",'Закрыть',"", 0)-- body
 end
 
 function imgui.OnDrawFrame()
