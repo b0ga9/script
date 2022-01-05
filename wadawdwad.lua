@@ -1,4 +1,4 @@
-script_version(2.0)
+script_version(1.0)
 
 require "lib.moonloader"
 local inicfg = require 'inicfg'
@@ -17,7 +17,7 @@ function main()
    if not isSampLoaded() or not isSampfuncsLoaded() then return end
    while not isSampAvailable() do wait(100) end
    --"https://raw.githubusercontent.com/b0ga9/script/master/wadawdwad.lua"
-   autoupdate("https://raw.githubusercontent.com/b0ga9/script/master/wadawdwad.lua", '['..string.upper(thisScript().name)..']: ', "https://raw.githubusercontent.com/b0ga9/script/master/update.json")
+   autoupdate("https://raw.githubusercontent.com/b0ga9/script/master/update.json", '['..string.upper(thisScript().name)..']: ', "https://raw.githubusercontent.com/b0ga9/script/master/update.json")
 
    sampAddChatMessage(tag, -1)
    sampRegisterChatCommand("updat", cmd_updat)
@@ -92,7 +92,7 @@ function autoupdate(json_url, prefix, url)
 end
 
 function cmd_updat(arg)
-   sampShowDialog(1000,'Автообновление','Текущая версия скрипта: v1.0'.."\nNew Обновление"..'\nNewwwwww11111','Закрыть',"", 0)-- body
+   sampShowDialog(1000,'Автообновление','Текущая версия скрипта: v1.0'.."\nNew Обновление",'Закрыть',"", 0)-- body
 end
 
 function imgui.OnDrawFrame()
