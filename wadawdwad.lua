@@ -6,7 +6,7 @@ encoding.default = "CP1251"
 u8 = encoding.UTF8
 local imgui = require "imgui"
 
-local tag = " Deed | {FFFFFF}Р—Р°РїСѓС‰РµРЅ."
+local tag = " Deed | {FFFFFF}Запущен."
 local main_window_state = imgui.ImBool(false)
 local two_window_state = imgui.ImBool(false)
 
@@ -15,11 +15,11 @@ function main()
    if not isSampLoaded() or not isSampfuncsLoaded() then return end
    while not isSampAvailable() do wait(100) end
 
-   autoupdate("https://api.jsonbin.io/b/61d521752675917a628a355f", '['..string.upper(thisScript().name)..']: ', "https://raw.githubusercontent.com/b0ga9/12313131/main/wadawdwad.lua")
+   autoupdate("https://raw.githubusercontent.com/b0ga9/script/master/update.json", '['..string.upper(thisScript().name)..']: ', "https://raw.githubusercontent.com/b0ga9/script/master/wadawdwad.lua")
 
    sampAddChatMessage(tag, -1)
    sampRegisterChatCommand("updat", cmd_updat)
-   sampRegisterChatCommand("redak", function() main_window_state.v = not main_window_state.v end) -- РљРѕРјР°РЅРґР° /cnn
+   sampRegisterChatCommand("redak", function() main_window_state.v = not main_window_state.v end) -- Команда /cnn
    sampRegisterChatCommand("test", function() two_window_state.v = not two_window_state.v end)
    
 
@@ -29,7 +29,7 @@ function main()
    end
 end
 
---СЌС‚Рѕ РІ main(), РїРѕСЃР»Рµ while not isSampAvailable() do wait(100) end
+--это в main(), после while not isSampAvailable() do wait(100) end
 --autoupdate("http://qrlk.me/dev/moonloader/getgun/stats.php", '['..string.upper(thisScript().name)..']: ', "http://vk.com/qrlk.mods")
 
 function autoupdate(json_url, prefix, url)
@@ -51,21 +51,21 @@ function autoupdate(json_url, prefix, url)
                      lua_thread.create(function(prefix)
                      local dlstatus = require('moonloader').download_status
                      local color = -1
-                     sampAddChatMessage((prefix..'РћР±РЅР°СЂСѓР¶РµРЅРѕ РѕР±РЅРѕРІР»РµРЅРёРµ. РџС‹С‚Р°СЋСЃСЊ РѕР±РЅРѕРІРёС‚СЊСЃСЏ c ' .. thisScript().version .. ' РЅР° '.. updateversion), color)
+                     sampAddChatMessage((prefix..'Обнаружено обновление. Пытаюсь обновиться c ' .. thisScript().version .. ' на '.. updateversion), color)
                      wait(250)
                      downloadUrlToFile(updatelink, thisScript().path,
                         function(id3, status1, p13, p23)
                            if status1 == dlstatus.STATUS_DOWNLOADINGDATA then
-                              print(string.format('Р—Р°РіСЂСѓР¶РµРЅРѕ %d РёР· %d.', p13, p23))
+                              print(string.format('Загружено %d из %d.', p13, p23))
                            elseif status1 == dlstatus.STATUS_ENDDOWNLOADDATA then
-                              print('Р—Р°РіСЂСѓР·РєР° РѕР±РЅРѕРІР»РµРЅРёСЏ Р·Р°РІРµСЂС€РµРЅР°.')
-                              sampAddChatMessage((prefix..'РћР±РЅРѕРІР»РµРЅРёРµ Р·Р°РІРµСЂС€РµРЅРѕ!'), color)
+                              print('Загрузка обновления завершена.')
+                              sampAddChatMessage((prefix..'Обновление завершено!'), color)
                               goupdatestatus = true
                               lua_thread.create(function() wait(500) thisScript():reload() end)
                            end
                            if status1 == dlstatus.STATUSEX_ENDDOWNLOAD then
                               if goupdatestatus == nil then
-                                 sampAddChatMessage((prefix..'РћР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕС€Р»Рѕ РЅРµСѓРґР°С‡РЅРѕ. Р—Р°РїСѓСЃРєР°СЋ СѓСЃС‚Р°СЂРµРІС€СѓСЋ РІРµСЂСЃРёСЋ..'), color)
+                                 sampAddChatMessage((prefix..'Обновление прошло неудачно. Запускаю устаревшую версию..'), color)
                                  update = false
                               end
                            end
@@ -75,12 +75,12 @@ function autoupdate(json_url, prefix, url)
                      )
                   else
                      update = false
-                     print('v'..thisScript().version..': РћР±РЅРѕРІР»РµРЅРёРµ РЅРµ С‚СЂРµР±СѓРµС‚СЃСЏ.')
+                     print('v'..thisScript().version..': Обновление не требуется.')
                   end
                end
             else
-               print('v'..thisScript().version..': РќРµ РјРѕРіСѓ РїСЂРѕРІРµСЂРёС‚СЊ РѕР±РЅРѕРІР»РµРЅРёРµ. РЎРјРёСЂРёС‚РµСЃСЊ РёР»Рё РїСЂРѕРІРµСЂСЊС‚Рµ СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕ РЅР° '..url)
-               sampAddChatMessage(" РќРµ РјРѕРіСѓ РїСЂРѕРІРµСЂРёС‚СЊ РѕР±РЅРѕРІР»РµРЅРёРµ.", -1)
+               print('v'..thisScript().version..': Не могу проверить обновление. Смиритесь или проверьте самостоятельно на '..url)
+               sampAddChatMessage(" Не могу проверить обновление.", -1)
                update = false
             end
          end
@@ -90,7 +90,7 @@ function autoupdate(json_url, prefix, url)
 end
 
 function cmd_updat(arg)
-   sampShowDialog(1000,'РђРІС‚РѕРѕР±РЅРѕРІР»РµРЅРёРµ','РўРµРєСѓС‰Р°СЏ РІРµСЂСЃРёСЏ СЃРєСЂРёРїС‚Р°: v1.0'.."\nNew РћР±РЅРѕРІР»РµРЅРёРµ",'Р—Р°РєСЂС‹С‚СЊ',"", 0)-- body
+   sampShowDialog(1000,'Автообновление','Текущая версия скрипта: v1.0'.."\nNew Обновление".."\nNew Обновление",'Закрыть',"", 0)-- body
 end
 
 function imgui.OnDrawFrame()
@@ -99,8 +99,8 @@ function imgui.OnDrawFrame()
       imgui.SetNextWindowPos(imgui.ImVec2(sw / 2, sh / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
       imgui.SetNextWindowSize(imgui.ImVec2(500, 250), imgui.Cond.FirstUseEver)
       imgui.Begin(u8'Sabiny', main_window_state, imgui.WindowFlags.NoResize)
-      if imgui.Button(u8'Р‘Р°СЂ 51', imgui.ImVec2(-0.1, 20))then
-         sampSendDialogResponse(557, 1, 1, "Р’ Р±Р°СЂРµ 51 РЅР° РїР»СЏР¶Рµ РЎР°РЅС‚Р°-РњР°СЂРёСЏ РѕС‚РґС‹С…Р°РµС‚ РјРЅРѕРіРѕ Р»СЋРґРµР№.Р–РґРµРј РІСЃРµС…")
+      if imgui.Button(u8'Бар 51', imgui.ImVec2(-0.1, 20))then
+         sampSendDialogResponse(557, 1, 1, "В баре 51 на пляже Санта-Мария отдыхает много людей.Ждем всех")
       end
       imgui.End()
    end
@@ -109,8 +109,8 @@ function imgui.OnDrawFrame()
       imgui.SetNextWindowPos(imgui.ImVec2(sw / 2, sh / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
       imgui.SetNextWindowSize(imgui.ImVec2(500, 250), imgui.Cond.FirstUseEver)
       imgui.Begin(u8'test', two_window_state, imgui.WindowFlags.NoResize)
-      if imgui.Button(u8'Р‘Р°СЂ 228', imgui.ImVec2(-0.1, 20))then
-         -- С‡С‚Рѕ Р±СѓРґРµС‚ РїСЂРѕРёСЃС…РѕРґРёС‚СЊ РµСЃР»Рё Р±СѓРґРµС‚ РЅР°Р¶Р°С‚Р° РєРЅРѕРїРєР°
+      if imgui.Button(u8'Бар 228', imgui.ImVec2(-0.1, 20))then
+         -- что будет происходить если будет нажата кнопка
       end
       imgui.End()
    end
